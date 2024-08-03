@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { io } from "socket.io-client";
 const initialState = {
-  socket: io("https://zam-test.onrender.com"),
+  socket: io("http://localhost:5000/"),
 };
 
 const dataSlice = createSlice({

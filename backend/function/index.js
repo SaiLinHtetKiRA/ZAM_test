@@ -6,18 +6,20 @@ export const fetchData = async () => {
 
   return data;
 };
+const Remove = {
+  createdAt: 0,
+  updatedAt: 0,
+  __v: 0,
+  "Episodes._id": 0,
+};
+const CRemove = {
+  createdAt: 0,
+  updatedAt: 0,
+  __v: 0,
+  "Episodes._id": 0,
+};
 export const fetchByID = async (id) => {
-  const data = await Anime.findById(id, {
-    createdAt: 0,
-    updatedAt: 0,
-    __v: 0,
-    "Episodes._id": 0,
-  }).populate("Categories", {
-    _id: 0,
-    createdAt: 0,
-    updatedAt: 0,
-    __v: 0,
-  });
+  const data = await Anime.findById(id, Remove).populate("Categories", CRemove);
   return data;
 };
 export const RandomAnimes = async (id) => {
@@ -39,10 +41,16 @@ export const RandomAnimes = async (id) => {
 };
 
 export const NewestAnime = async () => {
-  const data = await Anime.find({}).sort({ createdAt: -1 }).limit(10);
+  const data = await Anime.find({}, Remove)
+    .sort({ createdAt: -1 })
+    .populate("Categories", CRemove)
+    .limit(10);
   return data;
 };
 export const PopularAnime = async () => {
-  const data = await Anime.find({}).sort({ Likes: 1 }).limit(10);
+  const data = await Anime.find({}, Remove)
+    .sort({ Likes: 1 })
+    .populate("Categories", CRemove)
+    .limit(10);
   return data;
 };
