@@ -45,8 +45,8 @@ class page extends Component {
       <>
         <Home />
         <Swiper data={data} Title="Recently Uploaded" />
-        {/* <Swiper data={PopularAnime} Title="Popular" />
-        <Swiper data={RandomAnimes} Title="Random" /> */}
+        <Swiper data={PopularAnime} Title="Popular" />
+        <Swiper data={RandomAnimes} Title="Random" />
       </>
     );
   }
