@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+*::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  scroll-behavior: smooth;
+}
+
+.swiper-slide {
+  width: fit-content !important;
+}
+/* input[type=number] {
+    -moz-appearance: hidden;
+  } */
+
+.react-select__control,
+.select-role__control {
+  border: 0px !important;
+  background-color: transparent !important;
+  box-shadow: 0 0 0 0px white !important;
+}
+.react-select__single-value,
+.select-role__single-value {
+  color: white !important;
+}
+.react-select__indicator-separator,
+.select-role__indicator-separator {
+  display: none;
+}
+.react-select__menu,
+.select-role__menu {
+  background-color: transparent !important;
+  border: 0px;
+  margin: 0px !important;
+}
+.react-select__option,
+.select-role__option {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: smaller !important;
+}
+.react-select__menu-list,
+.select-role__menu-list {
+  padding: 0px !important;
+}
+.react-select__option--is-focused,
+.select-role__option--is-focused {
+  background-color: rgba(255, 255, 255, 0.719) !important;
+  color: black !important;
+}
+.select-role__indicator {
+  padding: 0px !important;
+}
