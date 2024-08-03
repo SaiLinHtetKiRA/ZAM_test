@@ -44,11 +44,9 @@ class page extends Component {
     return (
       <>
         <Home />
-        <section>
-          <Swiper data={data} Title="Recently Uploaded" />
-          <Swiper data={PopularAnime} Title="Popular" />
-          <Swiper data={RandomAnimes} Title="Random" />
-        </section>
+        <Swiper data={data} Title="Recently Uploaded" />
+        {/* <Swiper data={PopularAnime} Title="Popular" />
+        <Swiper data={RandomAnimes} Title="Random" /> */}
       </>
     );
   }

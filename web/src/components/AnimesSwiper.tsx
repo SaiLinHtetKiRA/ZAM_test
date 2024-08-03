@@ -9,7 +9,7 @@ export class SwiperAnime extends Component<AnimeState> {
   render() {
     const { data, Title } = this.props;
     return (
-      <div className="mx-[3%] mb-[2%]">
+      <main className="mx-[3%] mb-[2%]" id={Title}>
         <span className="font-semibold text-[20px] mb-[3%] capitalize text-white ">
           {Title}
         </span>
@@ -29,7 +29,7 @@ export class SwiperAnime extends Component<AnimeState> {
             ))}
           </Swiper>
         </section>
-      </div>
+      </main>
     );
   }
 }

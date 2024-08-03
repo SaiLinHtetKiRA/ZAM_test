@@ -5,7 +5,6 @@ import React, { Component } from "react";
 import { Anime } from "@/type";
 export default class Card extends Component<{ Anime: Anime }> {
   render() {
-    console.log(this.props.Anime);
     const { _id, Poster, Title, Rating, Episodes } = this.props.Anime;
 
     return (
