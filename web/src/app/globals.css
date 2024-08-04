@@ -13,9 +13,6 @@
   scroll-behavior: smooth;
 }
 
-.swiper-slide {
-  width: fit-content !important;
-}
 /* input[type=number] {
     -moz-appearance: hidden;
   } */

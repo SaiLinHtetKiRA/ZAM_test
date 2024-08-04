@@ -3,6 +3,7 @@ import Card from "./Card";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
+import "@/style/swiper.css";
 import { FreeMode } from "swiper/modules";
 import { AnimeState } from "@/type";
 export class SwiperAnime extends Component<AnimeState> {
@@ -20,7 +21,8 @@ export class SwiperAnime extends Component<AnimeState> {
             spaceBetween={20}
             freeMode={true}
             modules={[FreeMode]}
-            className="Card-Swiper"
+            className="Products-list"
+            // className="Card-Swiper"
           >
             {data?.map((data, i) => (
               <SwiperSlide key={i}>
