@@ -85,7 +85,7 @@ export interface RouteByid {
     id: string;
   };
   searchParams: {
-    ep: string;
+    ep: number & string;
     type: string;
   };
 }
