@@ -35,9 +35,7 @@ export default class page extends Component<{ searchParams: searchParams }> {
     });
   }
   componentDidUpdate(
-    prevProps: Readonly<{ searchParams: searchParams }>,
-    prevState,
-    snapshot
+    prevProps: Readonly<{ searchParams: searchParams }>
   ): void {
     if (prevProps.searchParams != this.props.searchParams) {
       Fetchdata(this.props.searchParams).then((data) =>
@@ -98,7 +96,7 @@ export default class page extends Component<{ searchParams: searchParams }> {
 
           <TagsSwiper
             field="studio"
-            data={Studios.map((data) => data.Studio)}
+            data={[...new Set(Studios.map((data) => data.Studio))]}
             {...this.props}
             color=" ring-fuchsia-600/80 bg-fuchsia-600/80 text-white/80"
             color2=" ring-fuchsia-600/80 bg-transparent text-fuchsia-500/80 "
@@ -111,7 +109,9 @@ export default class page extends Component<{ searchParams: searchParams }> {
             <div className="flex ">
               <div className="flex flex-wrap gap-4 p-5 ">
                 {data?.data?.map((anime) => (
-                  <Card Anime={anime} />
+                  <div key={anime._id}>
+                    <Card Anime={anime} />
+                  </div>
                 ))}
               </div>
             </div>

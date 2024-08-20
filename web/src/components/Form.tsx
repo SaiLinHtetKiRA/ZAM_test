@@ -329,6 +329,7 @@ export default function FormProvider({ Data }: { Data: Anime }) {
                   <span
                     className="text-white/80 cursor-pointer hover:text-white/90"
                     onClick={() => setEp(i + 1)}
+                    key={i}
                   >
                     {i + 1}
                   </span>

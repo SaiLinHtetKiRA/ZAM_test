@@ -62,7 +62,6 @@ export interface TagsSwiper {
   field: keyof searchParams;
   searchParams: searchParams;
   color2: string;
-  sort: string;
 }
 export interface Sort {
   searchParams: searchParams;
