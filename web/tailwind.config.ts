@@ -13,6 +13,13 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      borderRadius: {
+        'half-circle-top': '50% 50% 0 0 / 100% 100% 0 0',
+        'half-circle-bottom': '0 0 50% 50% / 0 0 100% 100%',
+      },
+      aspectRatio: {
+          "photo":"8/11"
+      },
     },
   },
   plugins: [],

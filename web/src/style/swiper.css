@@ -1,9 +1,10 @@
-.swiper{
-  width: 100%;
-  height: 100%;
-}
+
  .swiper .swiper-slide {
-    text-align: center;
     width: fit-content !important;
   }
-  
+   /* .Episodes-Swiper .swiper-slide div{
+    margin-left: 10px;
+  } */
+  .semi-circle {
+    border-radius: 10rem 10rem 0 0;
+  }

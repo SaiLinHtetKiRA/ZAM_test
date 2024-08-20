@@ -5,24 +5,23 @@ import "swiper/css";
 import "swiper/css/free-mode";
 import "@/style/swiper.css";
 import { FreeMode } from "swiper/modules";
-import { AnimeState } from "@/type";
-export class SwiperAnime extends Component<AnimeState> {
+import { AnimeSwiperState } from "@/type";
+export class SwiperAnime extends Component<AnimeSwiperState> {
   render() {
     const { data, Title } = this.props;
     return (
-      <main className="mx-[3%] mb-[2%]" id={Title}>
+      <main className="px-[3vw] pt-[2vw] lg:px-[2vw] lg:py-[1vw]" id={Title}>
         <span className="font-semibold text-[20px] mb-[3%] capitalize text-white ">
           {Title}
         </span>
-        <section className="px-[4%] py-[2%]">
+        <section className="px-[4vw] py-[2vw] lg:px-[2vw] lg:py-[1vw]">
           <Swiper
             watchSlidesProgress={true}
             slidesPerView="auto"
             spaceBetween={20}
             freeMode={true}
             modules={[FreeMode]}
-            className="Products-list"
-            // className="Card-Swiper"
+            className="Card-Swiper"
           >
             {data?.map((data, i) => (
               <SwiperSlide key={i}>

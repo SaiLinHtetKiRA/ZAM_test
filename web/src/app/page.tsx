@@ -3,18 +3,20 @@
 import React, { Component, useContext, useEffect, useState } from "react";
 
 import store from "@/redux/store";
-import { Anime, Home as Type } from "@/type";
+import { searchParams, Home as Type } from "@/type";
 import Home from "@/components/home";
 import Swiper from "@/components/AnimesSwiper";
 
-class page extends Component {
+class page extends Component<{ searchParams: searchParams }> {
   componentDidMount(): void {
     const {
       state: { socket },
     } = store.getState();
-    socket.emit("NewestAnime");
-    socket.emit("PopularAnime");
-    socket.emit("RandomAnimes");
+    const { type } = this.props.searchParams;
+
+    socket.emit("NewestAnime", type ? type : "Anime");
+    socket.emit("PopularAnime", type ? type : "Anime");
+    socket.emit("RandomAnimes", type ? type : "Anime");
 
     socket.on("NewestAnime", (data) => {
       this.setState({ data });
@@ -32,11 +34,19 @@ class page extends Component {
     PopularAnime: [],
     RandomAnimes: [],
   };
-  componentWillUnmount(): void {
-    const {
-      state: { socket },
-    } = store.getState();
-    socket.off("find-by-id");
+  componentDidUpdate(
+    prevProps: Readonly<{ searchParams: searchParams }>
+  ): void {
+    if (prevProps.searchParams.type != this.props.searchParams.type) {
+      const {
+        state: { socket },
+      } = store.getState();
+      const { type } = this.props.searchParams;
+
+      socket.emit("NewestAnime", type ? type : "Anime");
+      socket.emit("PopularAnime", type ? type : "Anime");
+      socket.emit("RandomAnimes", type ? type : "Anime");
+    }
   }
   render() {
     const { data, PopularAnime, RandomAnimes } = this.state;
