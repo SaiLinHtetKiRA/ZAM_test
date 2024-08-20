@@ -123,7 +123,7 @@ class page extends Component<RouteByid> {
                     </span>
                   </SwiperSlide>
                   {data.Categories?.map((category) => (
-                    <SwiperSlide key={category} className="mx-1.5 my-2">
+                    <SwiperSlide key={category.Name} className="mx-1.5 my-2">
                       <span
                         className="  text-rose-500/80  ring-2 ring-rose-600/80   rounded-sm px-2 py-1"
                         key={category.Name}
@@ -133,7 +133,7 @@ class page extends Component<RouteByid> {
                     </SwiperSlide>
                   ))}
                   {data.Themes?.map((Themes) => (
-                    <SwiperSlide key={Themes} className="mx-1.5 my-2">
+                    <SwiperSlide key={Themes.Name} className="mx-1.5 my-2">
                       <span
                         className="  text-cyan-500/80  ring-2 ring-cyan-600/80   rounded-sm px-2 py-1"
                         key={Themes.Name}
@@ -183,9 +183,9 @@ class page extends Component<RouteByid> {
               {data?.Episodes?.map((episode, i) => (
                 <SwiperSlide
                   key={i}
-                  className={
+                  className={`${
                     data?.Episodes?.length - 1 == i && "overflow-hidden"
-                  }
+                  }`}
                 >
                   <div className="ml-5 w-[140px] sm:w-[160px] aspect-photo">
                     <Link
