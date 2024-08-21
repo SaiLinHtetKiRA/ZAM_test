@@ -19,8 +19,8 @@ export interface Anime {
   Rating: number;
   Link: string;
   Complete: boolean;
-  Categories: [Tags];
-  Themes: [Tags];
+  Categories: Tags[];
+  Themes: Tags[];
   Views: number;
   Likes: number;
   Studio: string;
@@ -88,4 +88,8 @@ export interface RouteByid {
     ep: number & string;
     type: string;
   };
+}
+export interface ReactSelectOptions {
+  value: number | string;
+  label: number | string;
 }

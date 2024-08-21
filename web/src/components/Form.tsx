@@ -10,7 +10,9 @@ import React, {
   useState,
 } from "react";
 import Select, {
+  ActionMeta,
   ControlProps,
+  MultiValue,
   SingleValue,
   StylesConfig,
   components,
@@ -30,7 +32,7 @@ import { FaImdb } from "react-icons/fa";
 import { Complete, CreatableSelect as CS } from "@/style/Selector";
 import { CreateTags } from "@/function";
 import store from "@/redux/store";
-import { Anime, Tags as CategoriesType } from "@/type";
+import { Anime, Tags as CategoriesType, ReactSelectOptions } from "@/type";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 interface TagsOptions {
@@ -340,11 +342,11 @@ export default function FormProvider({ Data }: { Data?: Partial<Anime> }) {
                       ? [
                           ...getValues("Episodes"),
                           {
-                            Ep: getValues("Episodes").length + 1,
+                            Ep: (getValues("Episodes").length + 1).toString(),
                             Tg: "",
                           },
                         ]
-                      : [{ Ep: 1, Tg: "" }]
+                      : [{ Ep: "1", Tg: "" }]
                   );
                   setChanged(getValues("Episodes").length);
                 }}
@@ -410,8 +412,8 @@ export default function FormProvider({ Data }: { Data?: Partial<Anime> }) {
 //   );
 // };
 interface CreatableSelector {
-  Name: keyof Omit<Anime, "_id">;
-  options: { value: number | string; label: number | string }[];
+  Name: keyof Omit<Anime, "Poster" | "Episodes">;
+  options: ReactSelectOptions[];
   onCreate: (e: string) => void;
   isMulti: boolean;
   color: string;
@@ -429,20 +431,22 @@ const CreatableSelector = ({
   setValue,
   getValues,
 }: CreatableSelector) => {
-  const value = Array.isArray(getValues(Name))
-    ? getValues(Name)?.map((e) => ({
+  const values = getValues(Name);
+
+  // Handle the case where values is an array or single value
+  const value = Array.isArray(values)
+    ? values.map((e) => ({
         value: e._id,
         label: e.Name,
       }))
-    : { value: getValues(Name), label: getValues(Name) };
-
+    : { value: values, label: values };
   return (
     <Controller
       render={({ field }) => (
         <CreatableSelect
           options={options}
           isMulti={isMulti}
-          onChange={(e) =>
+          onChange={(e: any) =>
             setValue(
               Name,
               Array.isArray(e) ? e.map((data) => data.value) : e.value
@@ -464,15 +468,15 @@ const CreatableSelector = ({
   );
 };
 class ImageUpload extends Component<{
-  field: keyof Anime;
+  field: string;
   getValues: UseFormGetValues<Anime>;
   setValue: UseFormSetValue<Anime>;
   Ep: number;
 }> {
   state = {
     link:
-      typeof this.props.getValues(this.props.field) == "string"
-        ? this.props.getValues(this.props.field)
+      typeof this.props.getValues(this.props.field as keyof Anime) == "string"
+        ? this.props.getValues(this.props.field as keyof Anime)
         : undefined,
   };
   render() {
