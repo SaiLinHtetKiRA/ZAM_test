@@ -1,4 +1,5 @@
-export const Complete = {
+import { StylesConfig } from "react-select";
+export const Complete: StylesConfig = {
   control: (styles) => ({
     ...styles,
     border: 0,

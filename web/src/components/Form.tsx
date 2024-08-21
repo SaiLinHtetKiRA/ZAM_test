@@ -445,6 +445,7 @@ const CreatableSelector = ({
           placeholder={`Select ${Name}`}
           onCreateOption={onCreate}
           defaultValue={getValues(Name) && value}
+          closeMenuOnSelect={false}
         />
       )}
       name={Name}
