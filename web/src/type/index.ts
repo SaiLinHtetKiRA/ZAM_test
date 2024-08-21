@@ -13,7 +13,7 @@ export interface Tags {
 export interface Anime {
   _id: string;
   Title: string;
-  Poster: string;
+  Poster: string | File[];
   Review: string;
   Year: number;
   Rating: number;

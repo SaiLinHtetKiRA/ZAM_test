@@ -2,13 +2,19 @@
 
 import { useParams, usePathname } from "next/navigation";
 import React, {
+  ChangeEvent,
   Component,
   useEffect,
   useId,
   useLayoutEffect,
   useState,
 } from "react";
-import Select, { ControlProps, StylesConfig, components } from "react-select";
+import Select, {
+  ControlProps,
+  SingleValue,
+  StylesConfig,
+  components,
+} from "react-select";
 import CreatableSelect from "react-select/creatable";
 import {
   useForm,
@@ -16,28 +22,22 @@ import {
   Form,
   UseFormGetValues,
   UseFormSetValue,
-  FieldValues,
-  DeepPartial,
   Control,
+  SubmitHandler,
 } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
-import Card from "./Card";
 import { FaImdb } from "react-icons/fa";
 import { Complete, CreatableSelect as CS } from "@/style/Selector";
 import { CreateTags } from "@/function";
 import store from "@/redux/store";
 import { Anime, Tags as CategoriesType } from "@/type";
-import { Resolver } from "dns";
 import { useSelector } from "react-redux";
 
 interface TagsOptions {
   value: string;
   label: string;
 }
-export type UseFormProps<TFieldValues extends FieldValues = FieldValues> =
-  Partial<{
-    defaultValues: DeepPartial<TFieldValues>;
-  }>;
+
 export default function FormProvider({ Data }: { Data: Anime }) {
   const { setValue, getValues, control, handleSubmit } = useForm<Anime>({
     defaultValues: Data,
@@ -56,7 +56,7 @@ export default function FormProvider({ Data }: { Data: Anime }) {
   >([]);
   const [StudioOptions, setStudioOptions] = useState<Array<TagsOptions>>([]);
   const [Ep, setEp] = useState<number>(0);
-  const [Changed, setChanged] = useState(true);
+  const [Changed, setChanged] = useState<boolean | number>(true);
   const Params = useParams();
   const path = usePathname();
   // useEffect(() => {
@@ -120,7 +120,7 @@ export default function FormProvider({ Data }: { Data: Anime }) {
     };
   }, [Type]);
 
-  const SubmitHandler = async (data) => {
+  const SubmitHandler: SubmitHandler<Anime> = async (data) => {
     try {
       const { Type } = store.getState().state;
       const { _id, Poster, ...body } = data;
@@ -148,7 +148,15 @@ export default function FormProvider({ Data }: { Data: Anime }) {
     }
   };
 
-  const InputField = ({ control, Name, Type }) => (
+  const InputField = ({
+    control,
+    Name,
+    Type,
+  }: {
+    control: Control<Anime>;
+    Name: keyof Anime;
+    Type: string;
+  }) => (
     <Controller
       render={({ field }) => (
         <label className="w-full h-full">
@@ -156,16 +164,9 @@ export default function FormProvider({ Data }: { Data: Anime }) {
             type={Type}
             placeholder={Name}
             className="backdrop-blur-lg capitalize  bg-transparent  outline-none placeholder-transparent w-full h-full font-bold "
-            {...field}
-            maxLength={Type === "float" ? 3 : 500}
-            inputMode={Type === "float" ? "decimal" : "text"}
+            maxLength={Type == "float" ? 3 : 500}
+            inputMode={Type == "float" ? "decimal" : "text"}
           />
-          {/* <span
-            className="absolute transition-all duration-200 font-bold -mt-4 ml-3 text-sm text-white/50 left-0 peer-focus:-mt-4 peer-focus:text-white/50 peer-focus:text-sm peer-placeholder-shown:ml-3 peer-placeholder-shown:mt-0 peer-placeholder-shown:text-lg peer-placeholder:left-0
-             peer-placeholder-shown:text-white/90"
-          >
-            {Name}
-          </span> */}
         </label>
       )}
       defaultValue={getValues(Name) || ""}
@@ -175,9 +176,7 @@ export default function FormProvider({ Data }: { Data: Anime }) {
   );
   return (
     <Form
-      onSubmit={handleSubmit((data) => {
-        SubmitHandler(data);
-      })}
+      onSubmit={handleSubmit(SubmitHandler)}
       control={control}
       onSuccess={() => {
         alert("Success");
@@ -208,7 +207,7 @@ export default function FormProvider({ Data }: { Data: Anime }) {
                         { value: false, label: "On" },
                       ]}
                       isSearchable={false}
-                      onChange={(e) => setValue("Complete", e.value)}
+                      onChange={(e: any) => setValue("Complete", e.value)}
                       id="Complete"
                       className="uppercase rounded-full w-fit font-semibold sm:text-[10px] lg:text-[15px] text-white/80 outline-none "
                       styles={Complete}
@@ -246,8 +245,11 @@ export default function FormProvider({ Data }: { Data: Anime }) {
             <CreatableSelector
               Name="Year"
               options={YearOptions}
-              onCreate={(e: number) =>
-                setYearOptions((pre) => [...pre, { value: e, label: e }])
+              onCreate={(e: string) =>
+                setYearOptions((pre) => [
+                  ...pre,
+                  { value: Number(e), label: Number(e) },
+                ])
               }
               isMulti={false}
               color="147, 51, 234"
@@ -342,9 +344,12 @@ export default function FormProvider({ Data }: { Data: Anime }) {
                     getValues("Episodes")
                       ? [
                           ...getValues("Episodes"),
-                          { Ep: getValues("Episodes").length + 1, Tg: "" },
+                          {
+                            Ep: (getValues("Episodes").length + 1).toString(),
+                            Tg: "",
+                          },
                         ]
-                      : [{ Ep: 1, Tg: "" }]
+                      : [{ Ep: "1", Tg: "" }]
                   );
                   setChanged(getValues("Episodes").length);
                 }}
@@ -356,7 +361,10 @@ export default function FormProvider({ Data }: { Data: Anime }) {
           </footer>
         </aside>
       </section>
-      <button className="backdrop-blur-lg bg-white/60 w-fit p-4 font-bold place-self-center">
+      <button
+        type="submit"
+        className="backdrop-blur-lg bg-white/60 w-fit p-4 font-bold place-self-center"
+      >
         Create
       </button>
       {Ep && (
@@ -406,6 +414,16 @@ export default function FormProvider({ Data }: { Data: Anime }) {
 //     </components.Control>
 //   );
 // };
+interface CreatableSelector {
+  Name: keyof Anime;
+  options: { value: number | string; label: number | string }[];
+  onCreate: (e: string) => void;
+  isMulti: boolean;
+  color: string;
+  control: Control<Anime>;
+  setValue: UseFormSetValue<Anime>;
+  getValues: UseFormGetValues<Anime>;
+}
 const CreatableSelector = ({
   Name,
   options,
@@ -415,7 +433,7 @@ const CreatableSelector = ({
   control,
   setValue,
   getValues,
-}) => {
+}: CreatableSelector) => {
   const value = Array.isArray(getValues(Name))
     ? getValues(Name)?.map((e) => ({
         value: e._id,
@@ -451,24 +469,27 @@ const CreatableSelector = ({
   );
 };
 class ImageUpload extends Component<{
-  field: string;
-  getValues: UseFormGetValues;
-  setValue: UseFormSetValue;
+  field: keyof Anime;
+  getValues: UseFormGetValues<Anime>;
+  setValue: UseFormSetValue<Anime>;
   Ep: number;
 }> {
   state = {
-    link: this.props.getValues(this.props.field),
+    link:
+      typeof this.props.getValues(this.props.field) == "string"
+        ? this.props.getValues(this.props.field)
+        : undefined,
   };
   render() {
     const { field, getValues, setValue, Ep } = this.props;
-
+    const { link } = this.state;
     return (
       <label className="w-full h-full">
         {!this.props.getValues("Poster") ? (
           <div className="w-full h-full bg-red-500"></div>
         ) : (
           <img
-            src={this.state.link || this.props.getValues("Poster")}
+            src={link as string}
             alt="preview"
             className="object-cover w-full h-full"
           />
@@ -476,28 +497,30 @@ class ImageUpload extends Component<{
 
         <input
           type="file"
-          onChange={(e: any) => {
-            const file = e.target.files[0];
-            let newFileName =
-              Ep + file.name.substring(file.name.lastIndexOf("."));
-            let newFile = new File([file], newFileName, { type: file.type });
-            setValue(
-              "Poster",
-              getValues("Poster")
-                ? [...getValues("Poster"), newFile]
-                : [newFile]
-            );
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-              this.setState({ link: reader.result });
-            };
-            reader.onerror = () => {
-              console.log(reader.error);
-            };
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+            const file = e.target.files ? e.target.files[0] : null;
+            if (file) {
+              let newFileName =
+                Ep + file.name.substring(file.name.lastIndexOf("."));
+              let newFile = new File([file], newFileName, { type: file.type });
+              const currentPoster = getValues("Poster");
+              const posterArray = Array.isArray(currentPoster)
+                ? currentPoster
+                : [];
+
+              setValue("Poster", [...posterArray, newFile]);
+              const reader = new FileReader();
+              reader.readAsDataURL(file);
+              reader.onload = () => {
+                this.setState({ link: reader.result });
+              };
+              reader.onerror = () => {
+                console.log(reader.error);
+              };
+            }
           }}
           required
-          accept="image"
+          accept="image/*"
           className="sr-only"
         />
       </label>
@@ -505,28 +528,36 @@ class ImageUpload extends Component<{
   }
 }
 
-class EpiosdeList extends Component {
+class EpiosdeList extends Component<{
+  control: Control<Anime>;
+  Name: string;
+}> {
   render() {
     const { control, Name } = this.props;
     return (
       <div className="flex flex-col gap-5">
         <Controller
-          render={({ field }) => (
-            <label htmlFor={Name} className="relative w-full ">
-              <input
-                placeholder={Name}
-                {...field}
-                className="peer bg-transparent text-white/90 outline-none border-b border-b-slate-300 pl-3 pb-1 placeholder-transparent w-full font-bold"
-              />
-              <span
-                className="absolute transition-all duration-200 font-bold -mt-4 ml-3 text-sm text-white/50 left-0 peer-focus:-mt-4 peer-focus:text-white/50 peer-focus:text-sm peer-placeholder-shown:ml-3 peer-placeholder-shown:mt-0 peer-placeholder-shown:text-lg peer-placeholder:left-0
-             peer-placeholder-shown:text-white/90 "
-              >
-                {Name}
-              </span>
-            </label>
-          )}
-          name={Name}
+          render={({ field }) => {
+            const value =
+              typeof field.value === "string" || typeof field.value === "number"
+                ? field.value
+                : "";
+
+            return (
+              <label htmlFor={Name} className="relative w-full">
+                <input
+                  placeholder={Name}
+                  {...field}
+                  value={value}
+                  className="peer bg-transparent text-white/90 outline-none border-b border-b-slate-300 pl-3 pb-1 placeholder-transparent w-full font-bold"
+                />
+                <span className="absolute transition-all duration-200 font-bold -mt-4 ml-3 text-sm text-white/50 left-0 peer-focus:-mt-4 peer-focus:text-white/50 peer-focus:text-sm peer-placeholder-shown:ml-3 peer-placeholder-shown:mt-0 peer-placeholder-shown:text-lg peer-placeholder:left-0 peer-placeholder-shown:text-white/90">
+                  {Name}
+                </span>
+              </label>
+            );
+          }}
+          name={Name as keyof Anime}
           control={control}
         />
       </div>

@@ -19,7 +19,7 @@ export default class page extends Component<RouteByid> {
   render() {
     return (
       <main>
-        {Object.keys(this.state.data)?.length && (
+        {Object.entries(this.state.data).length && (
           <FormProvider Data={this.state.data} />
         )}
       </main>
