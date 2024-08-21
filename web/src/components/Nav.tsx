@@ -24,11 +24,13 @@ function Nav() {
   const { id } = useParams();
   const [search, setSearch] = useState<string>();
   const [scrolling, setScrolling] = useState<boolean>(true);
-  const [type, settype] = useState(
-    (searchParams.get("type") == "Anime" && false) ||
-      (searchParams.get("type") == "Hentai" && true)
-  );
-
+  const [type, settype] = useState<boolean>();
+  useEffect(() => {
+    settype(
+      (searchParams.get("type") == "Anime" && false) ||
+        (searchParams.get("type") == "Hentai" && true)
+    );
+  }, [searchParams]);
   useEffect(() => {
     window.removeEventListener("scroll", () => {
       setScrolling(false);
