@@ -12,9 +12,7 @@ export default class page extends Component<{ searchParams: searchParams }> {
       this.setState({ data });
     });
   }
-  componentDidUpdate(
-    prevProps: Readonly<{ searchParams: searchParams }>
-  ): void {
+  componentDidUpdate(prevProps: { searchParams: searchParams }): void {
     if (prevProps.searchParams.type == this.props.searchParams.type) {
       const { socket, Type } = store.getState().state;
       socket.emit("all-Animes", Type);
