@@ -38,7 +38,7 @@ interface TagsOptions {
   label: string;
 }
 
-export default function FormProvider({ Data }: { Data: Anime }) {
+export default function FormProvider({ Data }: { Data: Anime | undefined }) {
   const { setValue, getValues, control, handleSubmit } = useForm<Anime>({
     defaultValues: Data,
   });
@@ -415,7 +415,7 @@ export default function FormProvider({ Data }: { Data: Anime }) {
 //   );
 // };
 interface CreatableSelector {
-  Name: keyof Anime;
+  Name: keyof Omit<Anime, "_id">;
   options: { value: number | string; label: number | string }[];
   onCreate: (e: string) => void;
   isMulti: boolean;
