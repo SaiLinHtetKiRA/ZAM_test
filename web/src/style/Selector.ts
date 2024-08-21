@@ -1,10 +1,12 @@
+import { ReactSelectOptions } from "@/type";
 import { StylesConfig } from "react-select";
-export const Complete: StylesConfig = {
+type IsMulti = false;
+export const Complete: StylesConfig<ReactSelectOptions> = {
   control: (styles) => ({
     ...styles,
     border: 0,
     minHeight: "fit-fit-content",
-    boxShadow: 0,
+    boxShadow: "0",
   }),
 
   option: (styles, { data, isDisabled, isFocused, isSelected }) => {
@@ -51,15 +53,15 @@ export const Complete: StylesConfig = {
   container: (styles) => ({ ...styles, padding: 0 }),
 };
 
-export const CreatableSelect = (color) => {
-  const Categogories = {
+export const CreatableSelect = (color: string) => {
+  const Categogories: StylesConfig = {
     control: (styles, { hasValue, isMulti }) => {
       return {
         ...styles,
         minHeight: "fit-content",
         minWidth: hasValue ? "fit-content" : 240,
         maxWidth: "fit-content",
-        boxShadow: 0,
+        boxShadow: "0",
         ...(hasValue
           ? isMulti && {
               paddingLeft: 10,
@@ -87,7 +89,7 @@ export const CreatableSelect = (color) => {
     option: (styles, { data, isDisabled, isFocused, isSelected }) => {
       return {
         ...styles,
-        display: isSelected && "none",
+        display: isSelected ? "none" : "",
         backgroundColor: "transparent",
         borderWidth: 1,
         borderColor: `rgba(${color},0.7)`,
