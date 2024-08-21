@@ -17,6 +17,9 @@ const nextConfig = {
       frameSrc: ["https://jodwish.com/"],
     },
   },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 
 export default nextConfig;
