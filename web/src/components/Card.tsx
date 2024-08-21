@@ -22,7 +22,7 @@ export default class Card extends Component<{
         <div className="backdrop-blur-sm bg-gray-500/50 drop-shadow-lg shadow-lg shadow-white/5 pb-4 cursor-pointer  w-[140px] sm:w-[160px]">
           <div className="relative">
             <Image
-              src={Poster}
+              src={Poster as string}
               alt={Title}
               width={100}
               height={100}

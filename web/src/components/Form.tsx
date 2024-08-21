@@ -1,27 +1,12 @@
 "use client";
 
 import { useParams, usePathname } from "next/navigation";
-import React, {
-  ChangeEvent,
-  Component,
-  useEffect,
-  useId,
-  useLayoutEffect,
-  useState,
-} from "react";
-import Select, {
-  ActionMeta,
-  ControlProps,
-  MultiValue,
-  SingleValue,
-  StylesConfig,
-  components,
-} from "react-select";
+import React, { ChangeEvent, Component, useEffect, useState } from "react";
+import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import {
   useForm,
   Controller,
-  Form,
   UseFormGetValues,
   UseFormSetValue,
   Control,
@@ -33,7 +18,7 @@ import { Complete, CreatableSelect as CS } from "@/style/Selector";
 import { CreateTags } from "@/function";
 import store from "@/redux/store";
 import { Anime, Tags as CategoriesType, ReactSelectOptions } from "@/type";
-import { TypedUseSelectorHook, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 interface TagsOptions {
   value: string;

@@ -17,7 +17,9 @@ function Nav() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const Pathname = usePathname();
-  const { Type } = useSelector((state) => state.state);
+  const { Type } = useSelector(
+    (state: { state: { Type: string } }) => state.state
+  );
   const dispatch = useDispatch();
   const { id } = useParams();
   const [search, setSearch] = useState<string>();

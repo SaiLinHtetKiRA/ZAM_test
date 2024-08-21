@@ -30,7 +30,7 @@ export default class Sort extends Component<type> {
             //     : svg.name.toLowerCase()
             // }&page=${searchParams.page}`}
             href={{
-              path: "",
+              pathname: "",
               query: {
                 ...searchParams,
                 sort:
