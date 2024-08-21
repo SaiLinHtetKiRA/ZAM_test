@@ -11,9 +11,9 @@ export interface Tags {
   Name: string;
 }
 export interface Anime {
-  _id: string;
+  _id: string | undefined;
   Title: string;
-  Poster: string | File[];
+  Poster: string & File[];
   Review: string;
   Year: number;
   Rating: number;

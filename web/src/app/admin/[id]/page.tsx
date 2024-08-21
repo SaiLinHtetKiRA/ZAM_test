@@ -12,11 +12,14 @@ export default class page extends Component<RouteByid> {
       this.setState({ data });
     });
   }
-  state: { data: Anime | {} } = {
-    data: {},
+  state: { data?: Anime } = {
+    data: undefined,
   };
 
   render() {
+    if (!this.state.data) {
+      return <div>Loading...</div>;
+    }
     return (
       <main>
         {Object.entries(this.state.data).length && (
