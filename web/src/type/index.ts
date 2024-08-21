@@ -73,7 +73,7 @@ export interface Home {
 }
 
 export interface AnimeState {
-  data: { data: [Anime] | [] } | null;
+  data: { data: [Omit<Anime, "Poster"> & { Poster: string }] | [] } | null;
   Years: [{ Year: number }] | [];
   Categories: [Tags] | [];
   Themes: [Tags] | [];

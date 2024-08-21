@@ -20,7 +20,7 @@ export default class page extends Component<{ searchParams: searchParams }> {
       socket.emit("all-Animes", Type);
     }
   }
-  state: { data: Array<Anime> | [] } = {
+  state: { data: Array<Omit<Anime, "Poster"> & { Poster: string }> | [] } = {
     data: [],
   };
   render() {

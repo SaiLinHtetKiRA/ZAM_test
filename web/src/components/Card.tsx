@@ -5,7 +5,9 @@ import React, { Component } from "react";
 import { Anime } from "@/type";
 import Image from "next/image";
 import store from "@/redux/store";
-export default class Card extends Component<{ Anime: Anime }> {
+export default class Card extends Component<{
+  Anime: Omit<Anime, "Poster"> & { Poster: string };
+}> {
   render() {
     const { _id, Poster, Title, Rating, Episodes, Complete, path } =
       this.props.Anime;
