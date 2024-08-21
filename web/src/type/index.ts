@@ -1,3 +1,5 @@
+import { NextRouter } from "next/router";
+
 export interface Episodes {
   Ep: string;
   Code?: string;
@@ -88,8 +90,4 @@ export interface RouteByid {
     ep: number & string;
     type: string;
   };
-}
-export interface ReactSelectOptions {
-  value: number | string;
-  label: number | string;
 }
