@@ -38,11 +38,7 @@ interface TagsOptions {
   label: string;
 }
 
-export default function FormProvider({
-  Data,
-}: {
-  Data: Anime | {} | undefined | null;
-}) {
+export default function FormProvider({ Data }: { Data?: Partial<Anime> }) {
   const { setValue, getValues, control, handleSubmit } = useForm<Anime>({
     defaultValues: Data,
   });
