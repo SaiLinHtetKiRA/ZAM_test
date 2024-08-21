@@ -7,7 +7,7 @@ export default class page extends Component<RouteByid> {
   componentDidMount(): void {
     const { socket, Type } = store.getState().state;
     const { id } = this.props.params;
-    socket.emit(id, Type);
+    socket.emit(id);
     socket.on(id, (data: Anime) => {
       this.setState({ data });
     });

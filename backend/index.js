@@ -39,15 +39,15 @@ io.on("connection", (socket) => {
   });
   fetchData("Anime").then((data) =>
     data.map((Anime) =>
-      socket.on(Anime._id, (Type) =>
-        fetchByID(Anime._id, Type).then((data) => io.emit(Anime._id, data))
+      socket.on(Anime._id, () =>
+        fetchByID(Anime._id, "Anime").then((data) => io.emit(Anime._id, data))
       )
     )
   );
   fetchData("Hentai").then((data) =>
     data.map((Anime) =>
-      socket.on(Anime._id, (Type) =>
-        fetchByID(Anime._id, Type).then((data) => io.emit(Anime._id, data))
+      socket.on(Anime._id, () =>
+        fetchByID(Anime._id, "Hentai").then((data) => io.emit(Anime._id, data))
       )
     )
   );

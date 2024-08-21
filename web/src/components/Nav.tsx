@@ -32,9 +32,7 @@ function Nav() {
     );
   }, [searchParams]);
   useEffect(() => {
-    window.removeEventListener("scroll", () => {
-      setScrolling(false);
-    });
+    window.removeEventListener("scroll", () => setScrolling(false));
     window.addEventListener("scrollend", () => setScrolling(true));
     return () => {
       window.removeEventListener("scroll", () => {
@@ -61,7 +59,7 @@ function Nav() {
             <div className="flex gap-1 items-center">
               {id && (
                 <IoReturnUpBack
-                  className="cursor-pointer size-9 stroke-white/80 "
+                  className="cursor-pointer object-fill size-10 stroke-white/80 "
                   onClick={() => router.back()}
                 />
               )}

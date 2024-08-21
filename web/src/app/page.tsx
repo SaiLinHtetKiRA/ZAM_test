@@ -1,11 +1,12 @@
 "use client";
 
-import React, { Component, useContext, useEffect, useState } from "react";
+import React, { Component, Suspense } from "react";
 
 import store from "@/redux/store";
 import { searchParams, Home as Type } from "@/type";
 import Home from "@/components/home";
 import Swiper from "@/components/AnimesSwiper";
+import Loading from "./loading";
 
 class page extends Component<{ searchParams: searchParams }> {
   componentDidMount(): void {
@@ -54,9 +55,11 @@ class page extends Component<{ searchParams: searchParams }> {
     return (
       <>
         <Home />
-        <Swiper data={data} Title="Recently Uploaded" />
-        <Swiper data={PopularAnime} Title="Popular" />
-        <Swiper data={RandomAnimes} Title="Random" />
+        <Suspense fallback={<Loading />}>
+          <Swiper data={data} Title="Recently Uploaded" />
+          <Swiper data={PopularAnime} Title="Popular" />
+          <Swiper data={RandomAnimes} Title="Random" />
+        </Suspense>
       </>
     );
   }
