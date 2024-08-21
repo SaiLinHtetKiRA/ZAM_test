@@ -91,3 +91,7 @@ export interface RouteByid {
     type: string;
   };
 }
+export interface ReactSelectOptions {
+  value: number | string;
+  label: number | string;
+}
