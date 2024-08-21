@@ -116,7 +116,7 @@ export default class page extends Component<{ searchParams: searchParams }> {
               </div>
             </div>
           </div>
-          <Pagebtn length={data?.length} {...this.props} />
+          {/* <Pagebtn length={data?.length} {...this.props} /> */}
         </section>
       </main>
     );
