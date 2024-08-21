@@ -340,11 +340,11 @@ export default function FormProvider({ Data }: { Data?: Partial<Anime> }) {
                       ? [
                           ...getValues("Episodes"),
                           {
-                            Ep: (getValues("Episodes").length + 1).toString(),
+                            Ep: getValues("Episodes").length + 1,
                             Tg: "",
                           },
                         ]
-                      : [{ Ep: "1", Tg: "" }]
+                      : [{ Ep: 1, Tg: "" }]
                   );
                   setChanged(getValues("Episodes").length);
                 }}

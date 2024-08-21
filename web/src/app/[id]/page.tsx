@@ -78,7 +78,7 @@ class page extends Component<RouteByid> {
                     size={35}
                   />
                 </div>
-                <Link href={data.Episodes[ep - 1].Tg}>
+                <Link href={data.Episodes[ep - 1].Tg || ""}>
                   <FaTelegram color="#24A1DE" size={33} />
                 </Link>
                 <div>
@@ -90,7 +90,7 @@ class page extends Component<RouteByid> {
           <div className="sm:w-full md:w-[40svw] grid grid-cols-[170px,calc(100%-170px)] mt-3">
             <div className="w-[160px] aspect-photo  ">
               <Image
-                src={data.Poster}
+                src={data.Poster as string}
                 alt={data.Title}
                 width={100}
                 height={100}
@@ -201,7 +201,7 @@ class page extends Component<RouteByid> {
                       }
                     >
                       <Image
-                        src={episode.Poster ? episode.Poster : data.Poster}
+                        src={episode.Poster as string}
                         alt=""
                         width={100}
                         height={100}

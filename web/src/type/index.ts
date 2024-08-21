@@ -1,10 +1,10 @@
 export interface Episodes {
   Ep: string;
-  Code: string;
-  Poster: string | undefined;
-  Tg: string;
-  Views: number;
-  Likes: number;
+  Code?: string;
+  Poster?: string;
+  Tg?: string;
+  Views?: number;
+  Likes?: number;
 }
 export interface Tags {
   _id: string;
@@ -13,7 +13,7 @@ export interface Tags {
 export interface Anime {
   _id: string | undefined;
   Title: string;
-  Poster: string & File[];
+  Poster: string | File[];
   Review: string;
   Year: number;
   Rating: number;
@@ -24,7 +24,7 @@ export interface Anime {
   Views: number;
   Likes: number;
   Studio: string;
-  Episodes: [Episodes] | [];
+  Episodes: Episodes[];
   path: string | null | undefined;
 }
 
