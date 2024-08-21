@@ -29,6 +29,8 @@ export default function FormProvider({ Data }: { Data?: Anime }) {
   const { setValue, getValues, control, handleSubmit } = useForm<Anime>({
     defaultValues: Data,
   });
+  console.log(Data);
+
   const { Type } = useSelector(
     (state: { state: { Type: string } }) => state.state
   );
@@ -46,18 +48,7 @@ export default function FormProvider({ Data }: { Data?: Anime }) {
   const [StudioOptions, setStudioOptions] = useState<Array<TagsOptions>>([]);
   const [Ep, setEp] = useState<number>(0);
   const [Changed, setChanged] = useState<boolean | number>(true);
-  const Params = useParams();
-  const path = usePathname();
-  // useEffect(() => {
-  //   allCategories?.map((category, i) => {
-  //     options[i] = { value: category._id, label: category.Name };
-  //   });
-  //   setCategories(() =>
-  //     options?.filter((obj1) =>
-  //       Data?.Categories.some((obj2) => obj1.value === obj2._id)
-  //     )
-  //   );
-  // }, [allCategories, Data]);
+
   useEffect(() => {
     "use strict";
     const {
@@ -122,7 +113,7 @@ export default function FormProvider({ Data }: { Data?: Anime }) {
 
       formdata.append("body", JSON.stringify(body));
       const res = await fetch(
-        `http://localhost:5000/admin?type=${Type}&id=${_id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/admin?type=${Type}&id=${_id}`,
         {
           method: "POST",
           body: formdata,
@@ -142,8 +133,8 @@ export default function FormProvider({ Data }: { Data?: Anime }) {
     Name,
     Type,
   }: {
-    control: Control<Anime>;
-    Name: keyof Anime;
+    control: Control<any>;
+    Name: string;
     Type: string;
   }) => (
     <Controller
@@ -152,14 +143,15 @@ export default function FormProvider({ Data }: { Data?: Anime }) {
           <input
             type={Type}
             placeholder={Name}
+            {...field}
             className="backdrop-blur-lg capitalize  bg-transparent  outline-none placeholder-transparent w-full h-full font-bold "
             maxLength={Type == "float" ? 3 : 500}
             inputMode={Type == "float" ? "decimal" : "text"}
           />
         </label>
       )}
-      defaultValue={getValues(Name) || ""}
-      name={Name}
+      defaultValue={getValues(Name as keyof Anime) as string | number}
+      name={Name as keyof Anime}
       control={control}
     />
   );
@@ -504,7 +496,7 @@ class ImageUpload extends Component<{
               };
             }
           }}
-          required
+          required={getValues("Poster") ? false : true}
           accept="image/*"
           className="sr-only"
         />

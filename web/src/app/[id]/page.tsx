@@ -201,7 +201,7 @@ class page extends Component<RouteByid> {
                       }
                     >
                       <Image
-                        src={episode.Poster as string}
+                        src={episode.Poster || (data.Poster as string)}
                         alt=""
                         width={100}
                         height={100}
