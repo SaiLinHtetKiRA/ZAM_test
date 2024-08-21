@@ -175,7 +175,7 @@ export default function FormProvider({ Data }: { Data?: Partial<Anime> }) {
     />
   );
   return (
-    <Form
+    <form
       onSubmit={handleSubmit(SubmitHandler)}
       control={control}
       onSuccess={() => {
@@ -396,7 +396,7 @@ export default function FormProvider({ Data }: { Data?: Partial<Anime> }) {
           </div>
         </main>
       )}
-    </Form>
+    </form>
   );
 }
 
