@@ -31,7 +31,7 @@ import { Complete, CreatableSelect as CS } from "@/style/Selector";
 import { CreateTags } from "@/function";
 import store from "@/redux/store";
 import { Anime, Tags as CategoriesType } from "@/type";
-import { useSelector } from "react-redux";
+import { TypedUseSelectorHook, useSelector } from "react-redux";
 
 interface TagsOptions {
   value: string;
@@ -42,7 +42,9 @@ export default function FormProvider({ Data }: { Data?: Partial<Anime> }) {
   const { setValue, getValues, control, handleSubmit } = useForm<Anime>({
     defaultValues: Data,
   });
-  const { Type } = useSelector((state) => state.state);
+  const { Type } = useSelector(
+    (state: { state: { Type: string } }) => state.state
+  );
 
   const [CategoriesOptions, setCategoriesOptions] = useState<
     Array<TagsOptions>
@@ -177,13 +179,6 @@ export default function FormProvider({ Data }: { Data?: Partial<Anime> }) {
   return (
     <form
       onSubmit={handleSubmit(SubmitHandler)}
-      control={control}
-      onSuccess={() => {
-        alert("Success");
-      }}
-      onError={() => {
-        alert("error");
-      }}
       className="flex flex-col gap-5 p-[10svh]"
     >
       <section className="flex gap-5  h-fit">
