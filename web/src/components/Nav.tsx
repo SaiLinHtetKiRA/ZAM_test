@@ -9,7 +9,7 @@ import {
 } from "next/navigation";
 import { IoReturnUpBack } from "react-icons/io5";
 import { Home, Boxs, Search, Cross, About, Menu } from "@/svg";
-import store from "@/redux/store";
+
 import { setType } from "@/redux/state";
 import { useDispatch, useSelector } from "react-redux";
 function Nav() {
