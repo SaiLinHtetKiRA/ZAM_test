@@ -6,7 +6,7 @@ import { Anime } from "@/type";
 import Image from "next/image";
 import store from "@/redux/store";
 export default class Card extends Component<{
-  Anime: Omit<Anime, "Poster"> & { Poster: string };
+  Anime: Anime;
 }> {
   render() {
     const { _id, Poster, Title, Rating, Episodes, Complete, path } =
