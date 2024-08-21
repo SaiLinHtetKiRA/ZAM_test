@@ -13,7 +13,7 @@ export interface Tags {
 export interface Anime {
   _id: string | undefined;
   Title: string;
-  Poster: string;
+  Poster: string | File[];
   Review: string;
   Year: number;
   Rating: number;
@@ -31,11 +31,11 @@ export interface Anime {
 export interface State {
   data: Anime | null;
   Review: boolean;
-  Recommend: [Anime] | [];
+  Recommend: Anime[];
   height: number;
 }
 export interface AnimeSwiperState {
-  data: [Anime] | [];
+  data: Anime[];
   Title: string;
 }
 export interface searchParams {
@@ -67,9 +67,9 @@ export interface Sort {
   searchParams: searchParams;
 }
 export interface Home {
-  data: [Anime] | [];
-  PopularAnime: [Anime] | [];
-  RandomAnimes: [Anime] | [];
+  data: Anime[];
+  PopularAnime: Anime[];
+  RandomAnimes: Anime[];
 }
 
 export interface AnimeState {
