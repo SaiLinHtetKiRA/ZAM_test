@@ -12,7 +12,7 @@ import { Home, Boxs, Search, Cross, About, Menu } from "@/svg";
 
 import { setType } from "@/redux/state";
 import { useDispatch, useSelector } from "react-redux";
-const Nav = () => {
+const Nav: React.FC = () => {
   "use strict";
   const router = useRouter();
   const searchParams = useSearchParams();
