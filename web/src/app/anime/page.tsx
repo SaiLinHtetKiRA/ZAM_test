@@ -1,5 +1,5 @@
 "use client";
-import React, { Component } from "react";
+import React, { Component, Suspense } from "react";
 import store from "@/redux/store";
 import { AnimeState, Tags } from "@/type";
 import CategoriesSwiper from "@/components/CategoriesSwiper";
@@ -9,6 +9,8 @@ import { searchParams } from "@/type";
 import { Fetchdata } from "@/function";
 import Card from "@/components/Card";
 import Pagebtn from "@/components/Pagebtn";
+import { Anime } from "@/components/Anime";
+import { AnimepageLoader } from "@/components/loader/Animepage";
 export default class page extends Component<{ searchParams: searchParams }> {
   componentDidMount(): void {
     const {
@@ -37,11 +39,11 @@ export default class page extends Component<{ searchParams: searchParams }> {
   componentDidUpdate(
     prevProps: Readonly<{ searchParams: searchParams }>
   ): void {
-    if (prevProps.searchParams != this.props.searchParams) {
-      Fetchdata(this.props.searchParams).then((data) =>
-        this.setState({ data })
-      );
-    }
+    // if (prevProps.searchParams != this.props.searchParams) {
+    //   Fetchdata(this.props.searchParams).then((data) =>
+    //     this.setState({ data })
+    //   );
+    // }
     if (prevProps.searchParams.type != this.props.searchParams.type) {
       const {
         state: { socket },
@@ -106,15 +108,9 @@ export default class page extends Component<{ searchParams: searchParams }> {
           <Sort {...this.props} />
           <div className="py-[1vh] px-[2vw]">
             <h1 className="text-white/90 font-bold text-4xl">Animes</h1>
-            <div className="flex ">
-              <div className="flex flex-wrap gap-4 p-5 ">
-                {data?.data?.map((anime) => (
-                  <div key={anime._id}>
-                    <Card Anime={anime} />
-                  </div>
-                ))}
-              </div>
-            </div>
+            <Suspense fallback={<AnimepageLoader />}>
+              <Anime searchParams={this.props.searchParams} />
+            </Suspense>
           </div>
           {/* <Pagebtn length={data?.length} {...this.props} /> */}
         </section>

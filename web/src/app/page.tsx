@@ -43,7 +43,6 @@ class page extends Component<{ searchParams: searchParams }> {
         state: { socket },
       } = store.getState();
       const { type } = this.props.searchParams;
-
       socket.emit("NewestAnime", type ? type : "Anime");
       socket.emit("PopularAnime", type ? type : "Anime");
       socket.emit("RandomAnimes", type ? type : "Anime");
@@ -55,11 +54,9 @@ class page extends Component<{ searchParams: searchParams }> {
     return (
       <>
         <Home />
-        <Suspense fallback={<Loading />}>
-          <Swiper data={data} Title="Recently Uploaded" />
-          <Swiper data={PopularAnime} Title="Popular" />
-          <Swiper data={RandomAnimes} Title="Random" />
-        </Suspense>
+        <Swiper data={data} Title="Recently Uploaded" />
+        <Swiper data={PopularAnime} Title="Popular" />
+        <Swiper data={RandomAnimes} Title="Random" />
       </>
     );
   }

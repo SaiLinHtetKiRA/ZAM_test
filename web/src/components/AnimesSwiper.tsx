@@ -1,11 +1,13 @@
-import React, { Component } from "react";
+import React, { Component, Suspense } from "react";
 import Card from "./Card";
+import Loader from "./loader/Card";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "@/style/swiper.css";
 import { FreeMode } from "swiper/modules";
 import { AnimeSwiperState } from "@/type";
+
 export class SwiperAnime extends Component<AnimeSwiperState> {
   render() {
     const { data, Title } = this.props;
@@ -18,16 +20,22 @@ export class SwiperAnime extends Component<AnimeSwiperState> {
           <Swiper
             watchSlidesProgress={true}
             slidesPerView="auto"
-            spaceBetween={20}
+            spaceBetween={0}
             freeMode={true}
             modules={[FreeMode]}
             className="Card-Swiper"
           >
             {data?.map((data, i) => (
-              <SwiperSlide key={i}>
+              <SwiperSlide key={data._id} className="mr-5">
                 <Card Anime={data} />
               </SwiperSlide>
             ))}
+            {!data.length &&
+              Array.from({ length: 10 }).map((_, i) => (
+                <SwiperSlide key={i} className="mr-5">
+                  <Loader />
+                </SwiperSlide>
+              ))}
           </Swiper>
         </section>
       </main>
