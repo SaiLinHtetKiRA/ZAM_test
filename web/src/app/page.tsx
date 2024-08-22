@@ -6,7 +6,6 @@ import store from "@/redux/store";
 import { searchParams, Home as Type } from "@/type";
 import Home from "@/components/home";
 import Swiper from "@/components/AnimesSwiper";
-import Loading from "./loading";
 
 class page extends Component<{ searchParams: searchParams }> {
   componentDidMount(): void {
