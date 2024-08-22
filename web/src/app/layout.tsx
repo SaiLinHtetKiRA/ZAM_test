@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Redux from "@/provider/Redux";
@@ -20,7 +21,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Redux>
-          <Nav />
+          <Suspense>
+            <Nav />
+          </Suspense>
+
           {children}
         </Redux>
       </body>
