@@ -35,3 +35,4 @@ export const Anime = React.memo(
     );
   }
 );
+Anime.displayName = "Anime";
