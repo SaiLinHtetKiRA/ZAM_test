@@ -44,8 +44,8 @@ const Nav: React.FC = () => {
   return (
     <>
       {scrolling && (
-        <nav className="fixed flex justify-center w-screen  z-20 ">
-          <section className="flex px-6 py-1.5 backdrop-blur-lg bg-black/30 items-center gap-3 w-fit justify-between mt-3  rounded-full ">
+        <nav className="fixed flex justify-center w-screen z-20 ">
+          <section className="flex px-6 py-1.5 backdrop-blur-lg bg-black/30 items-center gap-3 w-fit justify-between mt-3  rounded-full mx-[10svw]">
             <div className="flex gap-1 items-center">
               {id && (
                 <IoReturnUpBack
@@ -59,7 +59,7 @@ const Nav: React.FC = () => {
                 alt="Logo"
                 width={100}
                 height={100}
-                className="size-10 cursor-pointer object-cover"
+                className="size-6 sm:size-10 cursor-pointer object-cover"
                 onClick={() => router.push(`../`)}
               />
             </div>

@@ -87,13 +87,15 @@ class page extends Component<RouteByid> {
               </div>
             </div>
             <div className="sm:w-full md:w-[40svw] grid grid-cols-[170px,calc(100%-170px)] mt-3">
-              <div className="w-[160px] aspect-photo  ">
+              <div className="w-[120px] sm:w-[120px] md:w-[160px] aspect-photo relative ">
                 <Image
                   src={data.Poster as string}
                   alt={data.Title}
-                  width={100}
-                  height={100}
-                  className="object-cover w-full h-full"
+                  quality={100}
+                  layout="fill"
+                  loading="lazy"
+                  placeholder="blur"
+                  blurDataURL="/Loading.gif"
                 />
               </div>
 
@@ -108,9 +110,20 @@ class page extends Component<RouteByid> {
                     spaceBetween={0}
                     freeMode={true}
                     modules={[FreeMode]}
-                    className="capitalize"
+                    className="capitalize [*>&>*]:cursor-pointer"
                     onSwiper={(e) => e.slideTo(ep - 1)}
                   >
+                    <SwiperSlide className="mx-1.5 my-2">
+                      <span
+                        className={`${
+                          data.Complete
+                            ? "text-lime-500/80  ring-2 ring-lime-500/80 "
+                            : "text-amber-500/80  ring-2 ring-amber-500/80"
+                        }  rounded-sm px-2 py-1 `}
+                      >
+                        {data.Complete ? "Complete" : "Ongoing"}
+                      </span>
+                    </SwiperSlide>
                     <SwiperSlide className="mx-1.5 my-2">
                       <span className="text-purple-600/80  ring-2 ring-purple-600/80 rounded-sm px-2 py-1 ">
                         {data.Year}
