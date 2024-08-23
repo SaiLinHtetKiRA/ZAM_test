@@ -215,9 +215,11 @@ class page extends Component<RouteByid> {
                         <Image
                           src={episode.Poster || (data.Poster as string)}
                           alt=""
-                          width={100}
-                          height={100}
-                          className="w-full h-full object-cover"
+                          quality={100}
+                          layout="fill"
+                          loading="lazy"
+                          placeholder="blur"
+                          blurDataURL="/Loading.gif"
                         />
                       </Link>
                     </div>
