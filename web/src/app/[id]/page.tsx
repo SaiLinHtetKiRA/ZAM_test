@@ -199,7 +199,7 @@ class page extends Component<RouteByid> {
                       data?.Episodes?.length - 1 == i && "overflow-hidden"
                     }`}
                   >
-                    <div className="ml-5 w-[140px] sm:w-[160px] aspect-photo">
+                    <div className="ml-5 w-[140px] sm:w-[160px] aspect-photo relative">
                       <Link
                         href={{
                           pathname: id,
