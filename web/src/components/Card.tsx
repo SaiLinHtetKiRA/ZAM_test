@@ -39,13 +39,18 @@ export default class Card extends Component<{
                 {Rating}
               </span>
             </span>
-            <span
+            {/* <span
               className={`absolute top-2 right-3 text-white ${
                 Complete ? "bg-lime-500/80" : "bg-amber-500/80"
               } px-1.5 py-1 rounded-lg text-transparent `}
             >
               {Complete ? "C" : "O"}
-            </span>
+            </span> */}
+            <span
+              className={`absolute top-2 right-3  px-1.5 py-1 ${
+                Complete ? "bg-lime-500" : "bg-amber-500"
+              } backdrop-blur-xl rounded-lg z-100`}
+            />
           </div>
 
           <div className="flex flex-col pl-2 py-1">

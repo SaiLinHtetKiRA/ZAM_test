@@ -30,7 +30,7 @@ export class SwiperAnime extends Component<AnimeSwiperState> {
                 <Card Anime={data} />
               </SwiperSlide>
             ))}
-            {!data.length &&
+            {!data &&
               Array.from({ length: 10 }).map((_, i) => (
                 <SwiperSlide key={i} className="mr-5">
                   <Loader />

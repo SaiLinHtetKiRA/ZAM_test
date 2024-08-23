@@ -1,64 +1,41 @@
 "use client";
 
-import React, { Component, Suspense } from "react";
-
-import store from "@/redux/store";
-import { searchParams, Home as Type } from "@/type";
+import React, { Component, Suspense, useEffect, useState } from "react";
+import { searchParams, Anime } from "@/type";
 import Home from "@/components/home";
 import Swiper from "@/components/AnimesSwiper";
+import { useSelector } from "react-redux";
 
-class page extends Component<{ searchParams: searchParams }> {
-  componentDidMount(): void {
-    const {
-      state: { socket },
-    } = store.getState();
-    const { type } = this.props.searchParams;
+const Page = ({ searchParams }: { searchParams: searchParams }) => {
+  const [data, setData] = useState<Anime[]>();
+  const [PopularAnime, setPopularAnime] = useState<Anime[]>();
+  const [RandomAnimes, setRandomAnimes] = useState<Anime[]>();
 
-    socket.emit("NewestAnime", type ? type : "Anime");
-    socket.emit("PopularAnime", type ? type : "Anime");
-    socket.emit("RandomAnimes", type ? type : "Anime");
+  const { Type, socket } = useSelector((state: any) => state.state);
+  useEffect(() => {
+    socket.emit("NewestAnime", Type);
+    socket.emit("PopularAnime", Type);
+    socket.emit("RandomAnimes", Type);
 
-    socket.on("NewestAnime", (data) => {
-      this.setState({ data });
+    socket.on("NewestAnime", (data: Anime[]) => {
+      setData(data);
     });
-    socket.on("PopularAnime", (data) => {
-      this.setState({ PopularAnime: data });
+    socket.on("PopularAnime", (data: Anime[]) => {
+      setPopularAnime(data);
     });
-    socket.on("RandomAnimes", (data) => {
-      this.setState({ RandomAnimes: data });
+    socket.on("RandomAnimes", (data: Anime[]) => {
+      setRandomAnimes(data);
     });
-  }
+  }, [Type]);
 
-  state: Type = {
-    data: [],
-    PopularAnime: [],
-    RandomAnimes: [],
-  };
-  componentDidUpdate(
-    prevProps: Readonly<{ searchParams: searchParams }>
-  ): void {
-    if (prevProps.searchParams.type != this.props.searchParams.type) {
-      const {
-        state: { socket },
-      } = store.getState();
-      const { type } = this.props.searchParams;
-      socket.emit("NewestAnime", type ? type : "Anime");
-      socket.emit("PopularAnime", type ? type : "Anime");
-      socket.emit("RandomAnimes", type ? type : "Anime");
-    }
-  }
-  render() {
-    const { data, PopularAnime, RandomAnimes } = this.state;
+  return (
+    <>
+      <Home />
+      <Swiper data={data} Title="Recently Uploaded" />
+      <Swiper data={PopularAnime} Title="Popular" />
+      <Swiper data={RandomAnimes} Title="Random" />
+    </>
+  );
+};
 
-    return (
-      <>
-        <Home />
-        <Swiper data={data} Title="Recently Uploaded" />
-        <Swiper data={PopularAnime} Title="Popular" />
-        <Swiper data={RandomAnimes} Title="Random" />
-      </>
-    );
-  }
-}
-
-export default page;
+export default Page;

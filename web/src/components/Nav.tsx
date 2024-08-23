@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 const Nav: React.FC = () => {
   "use strict";
   const router = useRouter();
-  const searchParams = useSearchParams();
   const Pathname = usePathname();
   const { Type } = useSelector(
     (state: { state: { Type: string } }) => state.state
@@ -24,15 +23,8 @@ const Nav: React.FC = () => {
   const { id } = useParams();
   const [search, setSearch] = useState<string>();
   const [scrolling, setScrolling] = useState<boolean>(true);
-  const [type, settype] = useState<boolean>();
   useEffect(() => {
-    settype(
-      (searchParams.get("type") == "Anime" && false) ||
-        (searchParams.get("type") == "Hentai" && true)
-    );
-  }, [searchParams]);
-  useEffect(() => {
-    window.removeEventListener("scroll", () => setScrolling(false));
+    window.addEventListener("scroll", () => setScrolling(false));
     window.addEventListener("scrollend", () => setScrolling(true));
     return () => {
       window.removeEventListener("scroll", () => {
@@ -43,13 +35,11 @@ const Nav: React.FC = () => {
   }, []);
 
   const OnToggle = (e: BaseSyntheticEvent) => {
-    const params = Object.fromEntries(searchParams.entries());
-    params.type = e.target.checked ? "Hentai" : "Anime";
-    const queryString = new URLSearchParams(params).toString();
     dispatch(setType(e.target.checked ? "Hentai" : "Anime"));
-    router.replace(`?${queryString}`, {
-      scroll: false,
-    });
+    console.log(Pathname);
+    if (Pathname == "/anime") {
+      router.push(`?category=&studio=&theme=&year=&sort=&page=1`);
+    }
   };
   return (
     <>
@@ -70,7 +60,7 @@ const Nav: React.FC = () => {
                 width={100}
                 height={100}
                 className="size-10 cursor-pointer object-cover"
-                onClick={() => router.push(`../?type=${Type}`)}
+                onClick={() => router.push(`../`)}
               />
             </div>
             <div className="relative w-full  ">
@@ -101,20 +91,20 @@ const Nav: React.FC = () => {
                     value=""
                     className="sr-only peer"
                     onChange={OnToggle}
-                    defaultChecked={type}
+                    defaultChecked={Type == "Hentai" ? true : false}
                   />
                   <div className="relative w-11 h-6 bg-white/10 rounded-full peer   dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px]  after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-white/20 backdrop-blur-lg after:bg-[url('/White.png')] peer-checked:after:bg-[url('/Black.png')]  peer-checked:after:bg-white after-bg-white after:bg-contain"></div>
                 </label>
                 <Home
                   className="size-6 stroke-white fill-none"
                   strokeWidth={24}
-                  onClick={() => router.push(`../?type=${Type}`)}
+                  onClick={() => router.push(`../`)}
                 />
                 <Boxs
                   className="size-7 stroke-white fill-none"
                   onClick={() =>
                     router.push(
-                      `../anime?category=&studio=&theme=&year=&sort=&page=1&type=${Type}`
+                      `../anime?category=&studio=&theme=&year=&sort=&page=1`
                     )
                   }
                 />

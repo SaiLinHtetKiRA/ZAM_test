@@ -37,7 +37,7 @@ export interface State {
   height: number;
 }
 export interface AnimeSwiperState {
-  data: Anime[];
+  data: Anime[] | undefined;
   Title: string;
 }
 export interface searchParams {
@@ -67,11 +67,6 @@ export interface TagsSwiper {
 }
 export interface Sort {
   searchParams: searchParams;
-}
-export interface Home {
-  data: Anime[];
-  PopularAnime: Anime[];
-  RandomAnimes: Anime[];
 }
 
 export interface AnimeState {
